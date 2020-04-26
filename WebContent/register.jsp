@@ -13,15 +13,15 @@
 		<table style="with: 50%">
 			<tr>
 				<td>First Name</td>
-				<td><input type="text" name="first_name" value='<jsp:attribute name="first_name"></jsp:attribute>'/></td>
+				<td><input type="text" name="first_name" /></td>
 			</tr>
 			<tr>
 				<td>Last Name</td>
-				<td><input type="text" name="last_name" value='<jsp:attribute name="last_name"></jsp:attribute>'/></td>
+				<td><input type="text" name="last_name" /></td>
 			</tr>
 			<tr>
 				<td>UserName</td>
-				<td><input type="text" name="username" value='<jsp:attribute name="username"></jsp:attribute>'/></td>
+				<td><input type="text" name="username" /></td>
 			</tr>
 			<tr>
 				<td>Password</td>
@@ -29,11 +29,11 @@
 			</tr>
 			<tr>
 				<td>Address</td>
-				<td><input type="text" name="address" value='<jsp:attribute name="address"></jsp:attribute>'/></td>
+				<td><input type="text" name="address" /></td>
 			</tr>
 			<tr>
 				<td>Contact No</td>
-				<td><input type="text" name="contact" value='<jsp:attribute name="contact"></jsp:attribute>'/></td>
+				<td><input type="text" name="contact" /></td>
 			</tr>
 		</table>
 		<input type="submit" value="Submit" />

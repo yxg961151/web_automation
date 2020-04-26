@@ -40,7 +40,6 @@ public class Register extends HttpServlet {
 
 		if (first_name.isEmpty() || last_name.isEmpty() || username.isEmpty() || password.isEmpty()
 				|| username.equals("Denver")) {
-			System.out.println("Enter Fail.....");
 			
 			HttpSession session = request.getSession();
 			
@@ -57,16 +56,13 @@ public class Register extends HttpServlet {
 			
 			RequestDispatcher req = request.getRequestDispatcher("register.jsp");
 			req.include(request, response);
-			System.out.println("Leaving Fail.....");
 		} else {
-			System.out.println("Enter Success.....");
 			HttpSession session = request.getSession();
 			
 			session.setAttribute("username", username);
 			session.setAttribute("password", password);
 			RequestDispatcher req = request.getRequestDispatcher("logon.jsp");
 			req.forward(request, response);
-			System.out.println("Leave Success.....");
 		}
 	}
 	

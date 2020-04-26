@@ -11,11 +11,11 @@
 		<table style="with: 50%">
 			<tr>
 				<td>UserName</td>
-				<td><input type="text" name="username" value='<jsp:attribute name="username"></jsp:attribute>'/></td>
+				<td><input type="text" name="username" /></td>
 			</tr>
 			<tr>
 				<td>Password</td>
-				<td><input type="password" name="password" value='<jsp:attribute name="password"></jsp:attribute>'/></td>
+				<td><input type="password" name="password" /></td>
 			</tr>
 			<tr>
 				<td><a href="/Web_Application/register.jsp"> Sign Up </a></td>				
