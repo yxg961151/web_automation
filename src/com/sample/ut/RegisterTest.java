@@ -22,11 +22,13 @@ import org.mockito.MockitoAnnotations;
 
 import com.sample.Register;
 
+import junit.framework.TestCase;
+
 /**
  * @author xuguang
  *
  */
-public class RegisterTest {
+public class RegisterTest extends TestCase{
 
 	@Mock
 	HttpServletRequest request;
@@ -83,7 +85,7 @@ public class RegisterTest {
 		when(request.getParameter("username")).thenReturn("Denver");
 		when(request.getParameter("password")).thenReturn("secret");
 		when(request.getParameter("address")).thenReturn("address");
-		when(request.getParameter("contact")).thenReturn("contact");
+		when(request.getParameter("contact")).thenReturn("");
 		
 		when(request.getSession()).thenReturn(session);
 		when(request.getRequestDispatcher("register.jsp")).thenReturn(rd);
@@ -95,9 +97,10 @@ public class RegisterTest {
 		verify(session).setAttribute("username", null);
 		verify(session).setAttribute("first_name", "xuguang");
 		verify(session).setAttribute("last_name", "yang");
-		verify(session).setAttribute("address", "address");
-		verify(session).setAttribute("contact", "contact");
 		verify(session).setAttribute("password", "secret");
+		verify(session).setAttribute("address", "address");
+		verify(session).setAttribute("contact", "");
+
 		
 		verify(rd).include(request, response);
 	}
