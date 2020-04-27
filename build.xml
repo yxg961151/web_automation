@@ -110,7 +110,7 @@
     </target>
     <target name="LogonTest">
         <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
+        <junit fork="yes" printsummary="withOutAndErr" failureProperty="test.failure" errorProperty="test.error">
             <formatter type="xml"/>
             <test name="com.sample.ut.LogonTest" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
@@ -119,7 +119,7 @@
     </target>
     <target name="RegisterTest">
         <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
+        <junit fork="yes" printsummary="withOutAndErr" failureProperty="test.failure" errorProperty="test.error">
             <formatter type="xml"/>
             <test name="com.sample.ut.RegisterTest" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
