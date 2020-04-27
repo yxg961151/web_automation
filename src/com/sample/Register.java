@@ -47,7 +47,7 @@ public class Register extends HttpServlet {
 			session.setAttribute("last_name", last_name);
 			session.setAttribute("address", address);
 			session.setAttribute("contact", contact);
-			session.setAttribute("password", password);
+//			session.setAttribute("password", password);
 			if (!username.equals("Denver")) {
 				session.setAttribute("username", username);
 			} else {
