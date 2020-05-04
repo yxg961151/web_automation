@@ -7,6 +7,7 @@
 <title>Logon success</title>
 </head>
 <body>
-<h1>You are in homepage</h1>
+<h1><%=session.getAttribute("username") %>>, You are in homepage!</h1>
+<h1>Last access time is <%=session.getLastAccessedTime() %>></h1>
 </body>
 </html>

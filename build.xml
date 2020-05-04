@@ -3,135 +3,191 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="Web_Application">
-    <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../Downloads/eclipse-j2ee/eclipse/"/>
-    <property name="junit.output.dir" value="junit"/>
-    <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.8"/>
-    <property name="source" value="1.8"/>
-    <path id="Apache Tomcat v9.0 [Apache Tomcat v9.0].libraryclasspath">
-        <pathelement location="${basedir}/lib/ecj-4.15.jar"/>
-        <pathelement location="${basedir}/lib/jasper-el.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-i18n-de.jar"/>
-        <pathelement location="${basedir}/lib/catalina.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-i18n-pt-BR.jar"/>
-        <pathelement location="${basedir}/lib/servlet-api.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-util-scan.jar"/>
-        <pathelement location="${basedir}/lib/catalina-ssi.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-websocket.jar"/>
-        <pathelement location="${basedir}/lib/catalina-ant.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-coyote.jar"/>
-        <pathelement location="${basedir}/lib/jasper.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-jni.jar"/>
-        <pathelement location="${basedir}/lib/catalina-storeconfig.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-i18n-es.jar"/>
-        <pathelement location="${basedir}/lib/catalina-ha.jar"/>
-        <pathelement location="${basedir}/lib/websocket-api.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-i18n-ru.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-i18n-zh-CN.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-i18n-ja.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-util.jar"/>
-        <pathelement location="${basedir}/lib/jsp-api.jar"/>
-        <pathelement location="${basedir}/lib/el-api.jar"/>
-        <pathelement location="${basedir}/lib/annotations-api.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-i18n-cs.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-i18n-fr.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-i18n-ko.jar"/>
-        <pathelement location="${basedir}/lib/catalina-tribes.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-jdbc.jar"/>
-        <pathelement location="${basedir}/lib/jaspic-api.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-dbcp.jar"/>
-        <pathelement location="${basedir}/lib/tomcat-api.jar"/>
-    </path>
-    <path id="Web App Libraries.libraryclasspath"/>
-    <path id="EAR Libraries.libraryclasspath"/>
-    <path id="JUnit 4.libraryclasspath">
-        <pathelement location="${basedir}/lib/org.junit_4.13.0.v20200204-1500.jar"/>
-        <pathelement location="${basedir}/lib/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
-    </path>
-    <path id="Web_Application.classpath">
-        <pathelement location="build/classes"/>
-        <path refid="Apache Tomcat v9.0 [Apache Tomcat v9.0].libraryclasspath"/>
-        <path refid="Web App Libraries.libraryclasspath"/>
-        <path refid="EAR Libraries.libraryclasspath"/>
-        <path refid="JUnit 4.libraryclasspath"/>
-        <pathelement location="${basedir}/lib/mockito-core-3.3.3-javadoc.jar"/>
-        <pathelement location="${basedir}/lib/mockito-core-3.3.3.jar"/>
-        <pathelement location="${basedir}/lib//byte-buddy-1.10.5.jar"/>
-        <pathelement location="${basedir}/lib//byte-buddy-agent-1.10.5.jar"/>
-        <pathelement location="${basedir}/lib//objenesis-2.6.jar"/>
-    </path>
-    <target name="init">
-        <mkdir dir="build/classes"/>
-        <copy includeemptydirs="false" todir="build/classes">
-            <fileset dir="src">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="clean">
-        <delete dir="build/classes"/>
-    </target>
-    <target depends="clean" name="cleanall"/>
-    <target depends="cleanall, build-subprojects,build-project, Web_Application, junitreport" name="build"/>
-    <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
-            <src path="src"/>
-            <classpath refid="Web_Application.classpath"/>
-        </javac>
-    </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
-    <target name="Web_Application">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="com.sample.ut.LogonTest" todir="${junit.output.dir}"/>
-            <test name="com.sample.ut.RegisterTest" todir="${junit.output.dir}"/>
-            <test name="com.sample.ut.TestSuite" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Web_Application.classpath"/>
-        </junit>
-    </target>
-    <target name="LogonTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr" failureProperty="test.failure" errorProperty="test.error">
-            <formatter type="xml"/>
-            <test name="com.sample.ut.LogonTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Web_Application.classpath"/>
-        </junit>
-    </target>
-    <target name="RegisterTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr" failureProperty="test.failure" errorProperty="test.error">
-            <formatter type="xml"/>
-            <test name="com.sample.ut.RegisterTest" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="Web_Application.classpath"/>
-        </junit>
-    </target>
-    <target name="junitreport">
-        <junitreport todir="${junit.output.dir}">
-            <fileset dir="${junit.output.dir}">
-                <include name="TEST-*.xml"/>
-            </fileset>
-            <report format="frames" todir="${junit.output.dir}"/>
-        </junitreport>
-    </target>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="Web_Application">
+	<property environment="env" />
+	<property name="ECLIPSE_HOME" value="../../Downloads/eclipse-j2ee/eclipse/" />
+	<property name="junit.output.dir" value="junit" />
+	<property name="debuglevel" value="source,lines,vars" />
+	<property name="target" value="1.8" />
+	<property name="source" value="1.8" />
+	<property name="tomcat-home" value="${env.TOMCAT_HOME}" />
+
+	<path id="Apache Tomcat v9.0 [Apache Tomcat v9.0].libraryclasspath">
+		<pathelement location="${basedir}/lib/ecj-4.15.jar" />
+		<pathelement location="${basedir}/lib/jasper-el.jar" />
+		<pathelement location="${basedir}/lib/tomcat-i18n-de.jar" />
+		<pathelement location="${basedir}/lib/catalina.jar" />
+		<pathelement location="${basedir}/lib/tomcat-i18n-pt-BR.jar" />
+		<pathelement location="${basedir}/lib/servlet-api.jar" />
+		<pathelement location="${basedir}/lib/tomcat-util-scan.jar" />
+		<pathelement location="${basedir}/lib/catalina-ssi.jar" />
+		<pathelement location="${basedir}/lib/tomcat-websocket.jar" />
+		<pathelement location="${basedir}/lib/catalina-ant.jar" />
+		<pathelement location="${basedir}/lib/tomcat-coyote.jar" />
+		<pathelement location="${basedir}/lib/jasper.jar" />
+		<pathelement location="${basedir}/lib/tomcat-jni.jar" />
+		<pathelement location="${basedir}/lib/catalina-storeconfig.jar" />
+		<pathelement location="${basedir}/lib/tomcat-i18n-es.jar" />
+		<pathelement location="${basedir}/lib/catalina-ha.jar" />
+		<pathelement location="${basedir}/lib/websocket-api.jar" />
+		<pathelement location="${basedir}/lib/tomcat-i18n-ru.jar" />
+		<pathelement location="${basedir}/lib/tomcat-i18n-zh-CN.jar" />
+		<pathelement location="${basedir}/lib/tomcat-i18n-ja.jar" />
+		<pathelement location="${basedir}/lib/tomcat-util.jar" />
+		<pathelement location="${basedir}/lib/jsp-api.jar" />
+		<pathelement location="${basedir}/lib/el-api.jar" />
+		<pathelement location="${basedir}/lib/annotations-api.jar" />
+		<pathelement location="${basedir}/lib/tomcat-i18n-cs.jar" />
+		<pathelement location="${basedir}/lib/tomcat-i18n-fr.jar" />
+		<pathelement location="${basedir}/lib/tomcat-i18n-ko.jar" />
+		<pathelement location="${basedir}/lib/catalina-tribes.jar" />
+		<pathelement location="${basedir}/lib/tomcat-jdbc.jar" />
+		<pathelement location="${basedir}/lib/jaspic-api.jar" />
+		<pathelement location="${basedir}/lib/tomcat-dbcp.jar" />
+		<pathelement location="${basedir}/lib/tomcat-api.jar" />
+	</path>
+	<path id="Web App Libraries.libraryclasspath" />
+	<path id="EAR Libraries.libraryclasspath" />
+	<path id="JUnit 4.libraryclasspath">
+		<pathelement location="${basedir}/lib/org.junit_4.13.0.v20200204-1500.jar" />
+		<pathelement location="${basedir}/lib/org.hamcrest.core_1.3.0.v20180420-1519.jar" />
+	</path>
+	<path id="Web_Application.classpath">
+		<pathelement location="build/classes" />
+		<path refid="Apache Tomcat v9.0 [Apache Tomcat v9.0].libraryclasspath" />
+		<path refid="Web App Libraries.libraryclasspath" />
+		<path refid="EAR Libraries.libraryclasspath" />
+		<path refid="JUnit 4.libraryclasspath" />
+		<pathelement location="${basedir}/lib/mockito-core-3.3.3-javadoc.jar" />
+		<pathelement location="${basedir}/lib/mockito-core-3.3.3.jar" />
+		<pathelement location="${basedir}/lib//byte-buddy-1.10.5.jar" />
+		<pathelement location="${basedir}/lib//byte-buddy-agent-1.10.5.jar" />
+		<pathelement location="${basedir}/lib//objenesis-2.6.jar" />
+	</path>
+
+	<path id="tomcat.class.path">
+		<fileset dir="${tomcat-home}/lib">
+			<include name="**/*.jar" />
+			<include name="**/*.zip" />
+		</fileset>
+		<pathelement location="${tomcat-home}/bin/bootstrap.jar" />
+		<pathelement location="${tomcat-home}/bin/tomcat-juli.jar" />
+	</path>
+
+	<target name="tomcat-start">
+		<echo>Start Tomcat</echo>
+		<java classname="org.apache.catalina.startup.Bootstrap" fork="true" classpathref="tomcat.class.path">
+			<jvmarg value="-Dcatalina.home=${tomcat-home}" />
+		</java>
+	</target>
+
+	<target name="tomcat-stop" depends="tomcat-check-status" if="tomcat.started">
+		<echo>Stop Tomcat</echo>
+		<java classname="org.apache.catalina.startup.Bootstrap" fork="true" classpathref="tomcat.class.path">
+			<jvmarg value="-Dcatalina.home=${tomcat-home}" />
+			<arg line="stop" />
+		</java>
+		<sleep seconds="5" />
+	</target>
+
+	<target name="tomcat-check-status">
+		<condition property="tomcat.started">
+			<socket server="localhost" port="8080" />
+		</condition>
+	</target>
+
+	<target name="init">
+		<mkdir dir="build/classes" />
+		<copy includeemptydirs="false" todir="build/classes">
+			<fileset dir="src">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="clean">
+		<delete dir="build/classes" />
+		<delete dir="webapps" />
+	</target>
+	<target depends="clean,build-project, unit-test, junitreport" name="build" />
+	<target name="build-subprojects" />
+	<target depends="init" name="build-project">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
+			<src path="src" />
+			<classpath refid="Web_Application.classpath" />
+		</javac>
+	</target>
+	<target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects" />
+	<target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+		<copy todir="${ant.library.dir}">
+			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar" />
+		</copy>
+		<unzip dest="${ant.library.dir}">
+			<patternset includes="jdtCompilerAdapter.jar" />
+			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar" />
+		</unzip>
+	</target>
+	<target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
+		<antcall target="build" />
+	</target>
+	<target name="unit-test">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="com.sample.ut.LogonTest" todir="${junit.output.dir}" />
+			<test name="com.sample.ut.RegisterTest" todir="${junit.output.dir}" />
+			<test name="com.sample.ut.TestSuite" todir="${junit.output.dir}" />
+			<jvmarg line="-ea" />
+			<classpath refid="Web_Application.classpath" />
+		</junit>
+	</target>
+	<target name="LogonTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" haltOnFailure="true" haltOnError="true">
+			<formatter type="xml" />
+			<test name="com.sample.ut.LogonTest" todir="${junit.output.dir}" />
+			<jvmarg line="-ea" />
+			<classpath refid="Web_Application.classpath" />
+		</junit>
+	</target>
+	<target name="RegisterTest">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" haltOnFailure="true" haltOnError="true">
+			<formatter type="xml" />
+			<test name="com.sample.ut.RegisterTest" todir="${junit.output.dir}" />
+			<jvmarg line="-ea" />
+			<classpath refid="Web_Application.classpath" />
+		</junit>
+	</target>
+	<target name="junitreport">
+		<junitreport todir="${junit.output.dir}">
+			<fileset dir="${junit.output.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${junit.output.dir}" />
+		</junitreport>
+	</target>
+	<target depends="clean, build-project" name="war">
+		<mkdir dir="${basedir}/webapps/" />
+		<war destfile="${basedir}/webapps/web-application.war" manifest="${basedir}/WebContent/META-INF/MANIFEST.MF">
+			<fileset dir="${basedir}/WebContent/">
+			</fileset>
+			<classes dir="build/classes" />
+		</war>
+	</target>
+
+	<target name="deploy" depends="war">
+		<sequential>
+			<antcall target="tomcat-stop" />
+			<echo>Deploy to server</echo>
+			<copy todir="${tomcat-home}/webapps">
+				<fileset dir="${basedir}/webapps" />
+			</copy>
+			<antcall target="tomcat-start" />
+		</sequential>
+	</target>
+	
 </project>

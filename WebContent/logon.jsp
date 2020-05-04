@@ -18,7 +18,7 @@
 				<td><input type="password" name="password" /></td>
 			</tr>
 			<tr>
-				<td><a href="/Web_Application/register.jsp"> Sign Up </a></td>				
+				<td><a href="/web_application/register.jsp"> Sign Up </a></td>				
 			</tr>
 			
 		</table>
